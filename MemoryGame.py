@@ -3,8 +3,9 @@ import time
 import ctypes
 import threading
 import sys
-if "win" in sys.platform:
-    from tkinter.commondialog import Dialog
+
+# if "win" in sys.platform:
+#     from tkinter.commondialog import Dialog
 
 from Game import Game
 
@@ -19,11 +20,11 @@ class MemoryGame(Game):
         ctypes.windll.user32.SendMessageW(wd,0x0010,0,0) ######
         return
 
-    def AutoCloseMessageBoxW(self, text, title, close_until_seconds):
+    # def AutoCloseMessageBoxW(self, text, title, close_until_seconds):
 
-        t = threading.Thread(target=self.worker,args=(title, close_until_seconds))
-        t.start()
-        ctypes.windll.user32.MessageBoxW(0, text, title, 0) ######
+    #     t = threading.Thread(target=self.worker,args=(title, close_until_seconds))
+    #     t.start()
+    #     ctypes.windll.user32.MessageBoxW(0, text, title, 0) ######
 
 
     def generate_sequence(self):
@@ -42,20 +43,20 @@ class MemoryGame(Game):
 
         print("(*** lecturer's hint : ", self.random_numbers, "***)") 
 
-        try:
-            is_win = False
-            if "win" in sys.platform:
-            # if is_win:
-                self.AutoCloseMessageBoxW(selecter_numbers,"Try to remember" , 0.7)
-            else:
-                sys.stdout.write(selecter_numbers)
-                sys.stdout.flush()
-                time.sleep(0.7)
-                for i in selecter_numbers:
-                    sys.stdout.write('\b')
+        # try:
+            # is_win = False
+            # if "win" in sys.platform:
+            # # if is_win:
+            #     self.AutoCloseMessageBoxW(selecter_numbers,"Try to remember" , 0.7)
+            # else:
+        sys.stdout.write(selecter_numbers)
+        sys.stdout.flush()
+        time.sleep(0.7)
+        for i in selecter_numbers:
+            sys.stdout.write('\b')
 
-        except:
-            print("This game fit to windows popup at the moment, other os will see it on consol")
+        # except:
+        #     print("This game fit to windows popup at the moment, other os will see it on consol")
 
     def get_list_from_user(self):
         x = 0
@@ -87,16 +88,10 @@ class MemoryGame(Game):
                 self.print_results(self.is_list_equal(), difficulty)
                 self.random_numbers = []
                 self.user_list = []
-                answer = self.should_play_again()
-                if answer == 0:
+                if not self.should_play_again():
                     print("See you next time")
-                    return 0
-                elif answer == 2:
-                    print("\nLet's play new again....\n")
-                    return 2
-                elif answer == 1:
-                    print("\nLet's play again....\n")
-
+                    break
+                print("\nLet's play again....")
             except KeyboardInterrupt:
                 print("See you next time")
                 break

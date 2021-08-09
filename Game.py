@@ -28,12 +28,9 @@ class Game:
 
     def should_play_again(self):
 
-        b = input("\nTo play once more or switch game? \n (y - yes \\ s - switch game \\ any other key - to exit):\n(note - when continue the screen wiil clean)\n")
+        b = input("\nTo play once more? (y\\n):\n(note - when continue the screen wiil clean)\n")
         if b == 'y'.lower() or b == "yes".lower():
             screen_cleaner()
-            return 1
-        if b == 's'.lower() or b == "switch".lower():
-            screen_cleaner()
-            return 2
+            return True
         else:
-            return 0
+            return False

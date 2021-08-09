@@ -13,7 +13,6 @@ class CurrencyRouletteGame(Game):
             response = requests.get(url)
             data = response.json()
             self.currncy_rate = float(data["USD_ILS"]["val"])
-            
         except:
             print("Can't Get\Parss\Convert currncy... check if you are online and site is up")
 
@@ -51,21 +50,12 @@ class CurrencyRouletteGame(Game):
 
         while True:
             try:
-                if self.get_money_interval() == 0:
-                    print("A fatal error occur, see you next time")
-                    break
-
+                self.get_money_interval()
                 self.print_results(self.get_guess_from_user(), difficulty)
-                answer = self.should_play_again()
-                if  answer == 0:
+                if not self.should_play_again():
                     print("See you next time")
-                    return 0
-                elif answer == 2:
-                    print("\nLet's play new again....\n")
-                    return 2
-                elif answer == 1:
-                    print("\nLet's play again....\n")
-
+                    break
+                print("\nLet's play again....\n")
             except KeyboardInterrupt:
                 print("\nSee you next time\n")
                 break

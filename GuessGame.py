@@ -13,18 +13,10 @@ class GuessGame(Game):
     def get_guess_from_user(self):
         s = "Enter number between 1 and " + str(self.difficulty) + " : "
         print()
-        t_x = 0
-        while True:
-            try:
-                x = input(s)
-                print("You enterd ", x)
-                print()
-                t_x = int(x)
-                break
-            except:
-                print("Input must be a number")
-
-        return int(t_x)
+        x = input(s)
+        print()
+        print("You enterd ", x)
+        return int(x)
 
     def compare_results(self, n):
         if n == self.secret_number:
@@ -41,16 +33,10 @@ class GuessGame(Game):
                 self.generate_number(d)
                 x = self.get_guess_from_user()
                 self.print_results(self.compare_results(x), difficulty)
-                answer = self.should_play_again()
-                if answer == 0:
+                if not self.should_play_again():
                     print("See you next time")
-                    return 0
-                elif answer == 2:
-                    print("\nLet's play new again....\n")
-                    return 2
-                elif answer == 1:
-                    print("\nLet's play again....\n")
-
+                    break
+                print("\nLet's play again....")
             except KeyboardInterrupt:
                 print("See you next time")
                 break
